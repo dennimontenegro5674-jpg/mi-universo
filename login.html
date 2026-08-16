@@ -9,16 +9,30 @@
 
 <body>
 
+    <!-- LOGIN -->
     <div class="login-box" id="loginBox">
         <h2>Mi Universo 💗</h2>
         <p>Bienvenido</p>
 
-        <input type="text" placeholder="Tu nombre">
-        <input type="password" placeholder="Tu contraseña">
+        <input type="text" id="nombre" placeholder="Tu nombre">
+        <input type="password" id="contraseña" placeholder="Tu contraseña">
 
         <button class="login-btn" onclick="iniciarSesion()">
             Entrar ✨
         </button>
+    </div>
+
+    <!-- PANTALLA DEL UNIVERSO -->
+    <div class="universo" id="universo">
+        <div class="estrellas">✦　✧　✦　✧　✦</div>
+
+        <h1>Bienvenido a mi universo 💗</h1>
+
+        <p id="mensaje"></p>
+
+        <div class="corazones">
+            💗 💕 💖 💘 💗
+        </div>
     </div>
 
     <script src="script.js"></script>
@@ -34,18 +48,15 @@
                 `perspective(800px) rotateY(${rotacionX}deg) rotateX(${rotacionY}deg)`;
         }
 
-        // Movimiento con mouse
         document.addEventListener("mousemove", (e) => {
             moverLogin(e.clientX, e.clientY);
         });
 
-        // Movimiento con dedo
         document.addEventListener("touchmove", (e) => {
             const dedo = e.touches[0];
             moverLogin(dedo.clientX, dedo.clientY);
         }, { passive: true });
 
-        // Volver al centro
         document.addEventListener("mouseleave", () => {
             caja.style.transform =
                 "perspective(800px) rotateY(0deg) rotateX(0deg)";
