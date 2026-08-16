@@ -26,15 +26,32 @@
     <script>
         const caja = document.getElementById("loginBox");
 
-        document.addEventListener("mousemove", (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 25;
-            const y = (window.innerHeight / 2 - e.clientY) / 25;
+        function moverLogin(x, y) {
+            const rotacionX = (window.innerWidth / 2 - x) / 25;
+            const rotacionY = (window.innerHeight / 2 - y) / 25;
 
             caja.style.transform =
-                `perspective(800px) rotateY(${x}deg) rotateX(${y}deg)`;
+                `perspective(800px) rotateY(${rotacionX}deg) rotateX(${rotacionY}deg)`;
+        }
+
+        // Movimiento con mouse
+        document.addEventListener("mousemove", (e) => {
+            moverLogin(e.clientX, e.clientY);
         });
 
+        // Movimiento con dedo
+        document.addEventListener("touchmove", (e) => {
+            const dedo = e.touches[0];
+            moverLogin(dedo.clientX, dedo.clientY);
+        }, { passive: true });
+
+        // Volver al centro
         document.addEventListener("mouseleave", () => {
+            caja.style.transform =
+                "perspective(800px) rotateY(0deg) rotateX(0deg)";
+        });
+
+        document.addEventListener("touchend", () => {
             caja.style.transform =
                 "perspective(800px) rotateY(0deg) rotateX(0deg)";
         });
