@@ -2,28 +2,56 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    font-family: Arial, sans-serif;
+}
+
+body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at center, #ff7eb3, #6a1b9a, #12001f);
-    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 50% 50%, rgba(130, 0, 255, 0.25), transparent 35%),
+        radial-gradient(circle at 20% 30%, rgba(255, 0, 150, 0.18), transparent 30%),
+        #050008;
 }
+
+/* LOGIN */
 
 .login-box {
     width: 350px;
     padding: 40px;
     text-align: center;
+
     border-radius: 25px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(255, 60, 180, 0.15);
+
     backdrop-filter: blur(15px);
+
     color: white;
-    transition: transform 0.2s ease;
+
+    position: relative;
+    z-index: 10;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.7s ease;
+
+    animation: aparecer 0.8s ease-out;
 }
 
 .login-box h2 {
@@ -40,10 +68,13 @@ body {
     width: 100%;
     padding: 14px;
     margin: 8px 0;
+
     border: none;
     outline: none;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.2);
+
+    background: rgba(255, 255, 255, 0.15);
+
     color: white;
     font-size: 15px;
 }
@@ -56,124 +87,489 @@ body {
     width: 100%;
     padding: 14px;
     margin-top: 18px;
+
     border: none;
     border-radius: 12px;
-    background: linear-gradient(45deg, #ff4f9a, #ff8acb);
+
+    background: linear-gradient(45deg, #ff1493, #b84dff);
+
     color: white;
+
     font-size: 16px;
     font-weight: bold;
+
     cursor: pointer;
+
     transition: 0.3s;
 }
 
 .login-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 25px #ff5ca8;
-}html,
-body {
-    touch-action: none;
-    overflow: hidden;
-}.login-box {
-    animation: aparecer 0.8s ease-out;
-}
 
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: perspective(800px) scale(0.7) rotateY(20deg);
-    }
-
-    to {
-        opacity: 1;
-        transform: perspective(800px) scale(1) rotateY(0deg);
-    }
+    box-shadow:
+        0 0 20px #ff1493,
+        0 0 40px rgba(184, 77, 255, 0.5);
 }
 
 .login-box::before {
     content: "✦  ✧  ✦  ✧  ✦";
+
     position: absolute;
+
     top: -45px;
     left: 50%;
+
     transform: translateX(-50%);
+
     font-size: 20px;
+
     color: white;
+
     animation: brillo 2s infinite alternate;
+}
+
+.login-box.salir {
+    opacity: 0;
+
+    transform:
+        perspective(800px)
+        scale(0.2)
+        rotateY(180deg) !important;
+}
+
+/* UNIVERSO */
+
+.universo {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    color: white;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(130, 0, 255, 0.25),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(255, 0, 150, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(0, 100, 255, 0.15),
+            transparent 30%
+        ),
+        #000;
+
+    z-index: 5;
+}
+
+/* NEBULOSA */
+
+.universo::before {
+    content: "";
+
+    position: absolute;
+
+    width: 700px;
+    height: 700px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(180, 70, 255, 0.20),
+            rgba(255, 0, 150, 0.08),
+            transparent 70%
+        );
+
+    filter: blur(35px);
+
+    animation:
+        galaxia 8s infinite alternate ease-in-out;
+
+    pointer-events: none;
+}
+
+/* TEXTO */
+
+.universo h1 {
+    font-size: 42px;
+
+    z-index: 2;
+
+    text-shadow:
+        0 0 15px #ff69b4,
+        0 0 35px #b84dff;
+}
+
+.universo p {
+    font-size: 20px;
+
+    max-width: 500px;
+
+    line-height: 1.6;
+
+    z-index: 2;
+}
+
+.estrellas {
+    font-size: 30px;
+    z-index: 2;
+
+    animation:
+        brillo 2s infinite alternate;
+}
+
+.corazones {
+    font-size: 40px;
+
+    margin-top: 25px;
+
+    z-index: 2;
+
+    animation:
+        flotar 2s infinite ease-in-out;
+}
+
+.universo.entrar {
+    animation:
+        entrarUniverso 1.5s ease-out;
+}
+
+/* ESTRELLAS Y CORAZONES QUE CREA JAVASCRIPT */
+
+.particula {
+    position: fixed;
+
+    z-index: 9999;
+
+    pointer-events: none;
+
+    color: white;
+
+    text-shadow:
+        0 0 5px white,
+        0 0 15px #ff4fa3,
+        0 0 25px #b84dff;
+
+    animation:
+        orbitar
+        linear
+        infinite;
+}
+
+/* ANIMACIONES */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+
+        transform:
+            perspective(800px)
+            scale(0.7)
+            rotateY(20deg);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            perspective(800px)
+            scale(1)
+            rotateY(0deg);
+    }
 }
 
 @keyframes brillo {
     from {
         opacity: 0.3;
-        filter: blur(1px);
-    }
-
-    to {
-        opacity: 1;
-        filter: blur(0);
-    }
-}.universo {
-    display: none;
-    min-height: 100vh;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    color: white;
-    animation: aparecerUniverso 1.5s ease;
-}
-
-.universo h1 {
-    font-size: 42px;
-    text-shadow: 0 0 25px #ff69b4;
-}
-
-.universo p {
-    font-size: 20px;
-    max-width: 500px;
-    line-height: 1.6;
-}
-
-.estrellas {
-    font-size: 30px;
-    animation: estrellas 2s infinite alternate;
-}
-
-.corazones {
-    font-size: 40px;
-    margin-top: 25px;
-    animation: corazones 2s infinite ease-in-out;
-}
-
-@keyframes aparecerUniverso {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes estrellas {
-    from {
         transform: scale(0.8);
-        opacity: 0.4;
     }
 
     to {
-        transform: scale(1.2);
         opacity: 1;
+        transform: scale(1.2);
     }
 }
 
-@keyframes corazones {
-    0%, 100% {
+@keyframes flotar {
+    0%,
+    100% {
         transform: translateY(0);
     }
 
     50% {
-        transform: translateY(-15px);
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes galaxia {
+    0% {
+        transform:
+            scale(0.8)
+            rotate(0deg);
+    }
+
+    100% {
+        transform:
+            scale(1.3)
+            rotate(180deg);
+    }
+}
+
+@keyframes entrarUniverso {
+    0% {
+        opacity: 0;
+
+        transform:
+            perspective(1000px)
+            scale(0.2)
+            rotateY(180deg);
+    }
+
+    60% {
+        opacity: 1;
+
+        transform:
+            perspective(1000px)
+            scale(1.1)
+            rotateY(-10deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            perspective(1000px)
+            scale(1)
+            rotateY(0deg);
+    }
+}
+
+@keyframes orbitar {
+
+    0% {
+        transform:
+            translate(0, 0)
+            rotate(0deg)
+            scale(0.6);
+
+        opacity: 0.2;
+    }
+
+    25% {
+        transform:
+            translate(
+                var(--movimiento),
+                calc(var(--movimiento) * -0.5)
+            )
+            rotate(90deg)
+            scale(1);
+
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translate(
+                calc(var(--movimiento) * -1),
+                var(--movimiento)
+            )
+            rotate(180deg)
+            scale(1.2);
+
+        opacity: 0.8;
+    }
+
+    75% {
+        transform:
+            translate(
+                calc(var(--movimiento) * -0.5),
+                calc(var(--movimiento) * -1)
+            )
+            rotate(270deg)
+            scale(0.9);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(0, 0)
+            rotate(360deg)
+            scale(0.6);
+
+        opacity: 0.2;
+    }
+}/* CENTRO DE LA GALAXIA */
+
+.galaxia-centro {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 0;
+
+    animation: centroFlotar 5s infinite ease-in-out;
+}
+
+.nucleo {
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: #000;
+
+    box-shadow:
+        0 0 20px #ff1493,
+        0 0 50px #b84dff,
+        0 0 90px rgba(255, 20, 147, 0.7);
+}
+
+.anillo {
+    position: absolute;
+
+    width: 250px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    border: 8px solid #ff4fa3;
+
+    box-shadow:
+        0 0 15px #ff1493,
+        0 0 30px #b84dff,
+        0 0 60px #8a2be2;
+
+    transform: rotate(-20deg);
+
+    animation: girarAnillo 4s linear infinite;
+}
+
+@keyframes girarAnillo {
+
+    from {
+        transform: rotate(-20deg);
+    }
+
+    to {
+        transform: rotate(340deg);
+    }
+}
+
+@keyframes centroFlotar {
+
+    0%,
+    100% {
+        transform: scale(0.95);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}/* ÓRBITA DE LA GALAXIA */
+
+.particula {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+
+    z-index: 4;
+    pointer-events: none;
+
+    color: white;
+
+    text-shadow:
+        0 0 5px white,
+        0 0 15px #ff4fa3,
+        0 0 25px #b84dff;
+
+    animation: orbitaGalaxia linear infinite;
+}
+
+@keyframes orbitaGalaxia {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg)
+            translateX(var(--x))
+            scale(0.7);
+
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg)
+            translateX(var(--x))
+            scale(0.7);
+
+        opacity: 0.3;
+    }
+}/* ✨ ESTRELLAS QUE APARECEN CON EL DEDO */
+
+.estrella-dedo {
+    position: fixed;
+
+    z-index: 10000;
+
+    pointer-events: none;
+
+    color: white;
+
+    font-size: 12px;
+
+    text-shadow:
+        0 0 5px white,
+        0 0 10px #ff4fa3,
+        0 0 20px #b84dff;
+
+    animation: estrellaDedo 1s ease-out forwards;
+}
+
+@keyframes estrellaDedo {
+
+    0% {
+        opacity: 1;
+        transform: scale(0.5) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5) rotate(90deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            scale(0)
+            translateY(-40px)
+            rotate(180deg);
     }
 }

@@ -11,6 +11,7 @@
 
     <!-- LOGIN -->
     <div class="login-box" id="loginBox">
+
         <h2>Mi universo 💗</h2>
         <p>Bienvenido</p>
 
@@ -20,52 +21,103 @@
         <button class="login-btn" onclick="iniciarSesion()">
             Entrar ✨
         </button>
+
     </div>
+
 
     <!-- PANTALLA DEL UNIVERSO -->
     <div class="universo" id="universo">
-        <div class="estrellas">✦　✧　✦　✧　✦</div>
 
-        <h1>Bienvenido a mi universo 💗</h1>
+        <!-- CENTRO DE LA GALAXIA -->
+        <div class="galaxia-centro">
+            <div class="anillo"></div>
+            <div class="nucleo"></div>
+        </div>
+
+        <div class="estrellas">
+            ✦　✧　✦　✧　✦
+        </div>
+
+        <h1>
+            Bienvenido a mi universo 💗
+        </h1>
 
         <p id="mensaje"></p>
 
         <div class="corazones">
             💗 💕 💖 💘 💗
         </div>
+
     </div>
+
 
     <script src="script.js"></script>
 
+
     <script>
+
         const caja = document.getElementById("loginBox");
 
+
         function moverLogin(x, y) {
-            const rotacionX = (window.innerWidth / 2 - x) / 25;
-            const rotacionY = (window.innerHeight / 2 - y) / 25;
+
+            const rotacionX =
+                (window.innerWidth / 2 - x) / 25;
+
+            const rotacionY =
+                (window.innerHeight / 2 - y) / 25;
+
 
             caja.style.transform =
-                `perspective(800px) rotateY(${rotacionX}deg) rotateX(${rotacionY}deg)`;
+                `perspective(800px)
+                 rotateY(${rotacionX}deg)
+                 rotateX(${rotacionY}deg)`;
         }
 
+
+        // MOVIMIENTO CON MOUSE
+
         document.addEventListener("mousemove", (e) => {
-            moverLogin(e.clientX, e.clientY);
+
+            moverLogin(
+                e.clientX,
+                e.clientY
+            );
+
         });
+
+
+        // MOVIMIENTO CON DEDO
 
         document.addEventListener("touchmove", (e) => {
+
             const dedo = e.touches[0];
-            moverLogin(dedo.clientX, dedo.clientY);
+
+            moverLogin(
+                dedo.clientX,
+                dedo.clientY
+            );
+
         }, { passive: true });
 
+
+        // VOLVER AL CENTRO
+
         document.addEventListener("mouseleave", () => {
+
             caja.style.transform =
                 "perspective(800px) rotateY(0deg) rotateX(0deg)";
+
         });
 
+
         document.addEventListener("touchend", () => {
+
             caja.style.transform =
                 "perspective(800px) rotateY(0deg) rotateX(0deg)";
+
         });
+
     </script>
 
 </body>
