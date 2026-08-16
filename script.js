@@ -26,10 +26,19 @@ function iniciarSesion() {
 
         crearGalaxia();
 
+        // 💗 Comenzar lluvia de "Te amo"
+        lluviaTeAmo();
+
+        // 💗 Seguir creando lluvia continuamente
+        setInterval(() => {
+            lluviaTeAmo();
+        }, 4000);
+
     }, 700);
 }
 
 
+// 🌌 CREAR GALAXIA
 function crearGalaxia() {
 
     const simbolos = [
@@ -50,12 +59,9 @@ function crearGalaxia() {
         particula.className = "particula";
 
         particula.textContent =
-            simbolos[
-                Math.floor(Math.random() * simbolos.length)
-            ];
+            simbolos[Math.floor(Math.random() * simbolos.length)];
 
-        const angulo =
-            Math.random() * Math.PI * 2;
+        const angulo = Math.random() * Math.PI * 2;
 
         const distancia =
             120 + Math.random() * 350;
@@ -63,23 +69,12 @@ function crearGalaxia() {
         const x =
             Math.cos(angulo) * distancia;
 
-        const y =
-            Math.sin(angulo) * distancia * 0.45;
-
-        particula.style.left =
-            "50%";
-
-        particula.style.top =
-            "50%";
+        particula.style.left = "50%";
+        particula.style.top = "50%";
 
         particula.style.setProperty(
             "--x",
             x + "px"
-        );
-
-        particula.style.setProperty(
-            "--y",
-            y + "px"
         );
 
         particula.style.fontSize =
@@ -93,19 +88,69 @@ function crearGalaxia() {
 
         document.body.appendChild(particula);
     }
-}// ✨ ESTRELLAS AL PASAR EL DEDO
+}
 
+
+// 💗 LLUVIA DE "TE AMO"
+function lluviaTeAmo() {
+
+    const universo =
+        document.getElementById("universo");
+
+    for (let i = 0; i < 15; i++) {
+
+        const texto =
+            document.createElement("div");
+
+        texto.className = "te-amo";
+
+        texto.textContent =
+            "Te amo ❤️";
+
+        // Posición horizontal aleatoria
+        texto.style.left =
+            Math.random() * 100 + "vw";
+
+        // Tamaño aleatorio
+        texto.style.fontSize =
+            (14 + Math.random() * 14) + "px";
+
+        // Velocidad aleatoria
+        texto.style.animationDuration =
+            (4 + Math.random() * 5) + "s";
+
+        // Retraso aleatorio
+        texto.style.animationDelay =
+            Math.random() * 2 + "s";
+
+        universo.appendChild(texto);
+
+        // Eliminar después de caer
+        setTimeout(() => {
+            texto.remove();
+        }, 10000);
+    }
+}
+
+
+// ✨ ESTRELLAS AL PASAR EL DEDO
 document.addEventListener("touchmove", (e) => {
 
     const dedo = e.touches[0];
 
-    const estrella = document.createElement("div");
+    const estrella =
+        document.createElement("div");
 
-    estrella.className = "estrella-dedo";
+    estrella.className =
+        "estrella-dedo";
+
     estrella.textContent = "✦";
 
-    estrella.style.left = dedo.clientX + "px";
-    estrella.style.top = dedo.clientY + "px";
+    estrella.style.left =
+        dedo.clientX + "px";
+
+    estrella.style.top =
+        dedo.clientY + "px";
 
     document.body.appendChild(estrella);
 
