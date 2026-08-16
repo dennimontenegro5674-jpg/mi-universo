@@ -110,4 +110,70 @@ body {
         opacity: 1;
         filter: blur(0);
     }
+}.universo {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+    animation: aparecerUniverso 1.5s ease;
+}
+
+.universo h1 {
+    font-size: 42px;
+    text-shadow: 0 0 25px #ff69b4;
+}
+
+.universo p {
+    font-size: 20px;
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+.estrellas {
+    font-size: 30px;
+    animation: estrellas 2s infinite alternate;
+}
+
+.corazones {
+    font-size: 40px;
+    margin-top: 25px;
+    animation: corazones 2s infinite ease-in-out;
+}
+
+@keyframes aparecerUniverso {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes estrellas {
+    from {
+        transform: scale(0.8);
+        opacity: 0.4;
+    }
+
+    to {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes corazones {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
 }
