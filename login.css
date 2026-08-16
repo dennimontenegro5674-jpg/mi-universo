@@ -69,4 +69,8 @@ body {
 .login-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 0 25px #ff5ca8;
+}html,
+body {
+    touch-action: none;
+    overflow: hidden;
 }
