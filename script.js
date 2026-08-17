@@ -1,161 +1,323 @@
-function iniciarSesion() {
+// ==========================================
+// 🌌 GALAXIA 3D
+// ==========================================
 
-    const nombre = document.getElementById("nombre").value;
-    const contraseña = document.getElementById("contraseña").value;
+const galaxia = document.getElementById("galaxia");
 
-    if (nombre === "" || contraseña === "") {
-        alert("💗 Completa tu nombre y contraseña");
-        return;
-    }
+let escena;
+let camara;
+let renderizador;
+let estrellas;
+let estrellas2;
 
-    const login = document.getElementById("loginBox");
-    const universo = document.getElementById("universo");
+if (galaxia && typeof THREE !== "undefined") {
 
-    login.classList.add("salir");
+    escena = new THREE.Scene();
 
-    setTimeout(() => {
+    camara = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        2000
+    );
 
-        login.style.display = "none";
+    camara.position.z = 500;
 
-        universo.style.display = "flex";
-        universo.classList.add("entrar");
+    renderizador = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true
+    });
 
-        document.getElementById("mensaje").textContent =
-            "Este pequeño universo fue creado especialmente para ti, "
-            + nombre + " 💗";
+    renderizador.setPixelRatio(
+        Math.min(window.devicePixelRatio, 2)
+    );
 
-        crearGalaxia();
+    renderizador.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
 
-        // 💗 Comenzar lluvia de "Te amo"
-        lluviaTeAmo();
-
-        // 💗 Seguir creando lluvia continuamente
-        setInterval(() => {
-            lluviaTeAmo();
-        }, 4000);
-
-    }, 700);
-}
+    galaxia.appendChild(renderizador.domElement);
 
 
-// 🌌 CREAR GALAXIA
-function crearGalaxia() {
+    // ==========================================
+    // ✨ ESTRELLAS
+    // ==========================================
 
-    const simbolos = [
-        "✦",
-        "✧",
-        "★",
-        "⋆",
-        "·",
-        "💗",
-        "💕",
-        "💖"
-    ];
+    const cantidad = 3000;
 
-    for (let i = 0; i < 100; i++) {
+    const posiciones = new Float32Array(cantidad * 3);
 
-        const particula = document.createElement("div");
+    for (let i = 0; i < cantidad; i++) {
 
-        particula.className = "particula";
-
-        particula.textContent =
-            simbolos[Math.floor(Math.random() * simbolos.length)];
-
+        const radio = 150 + Math.random() * 900;
         const angulo = Math.random() * Math.PI * 2;
 
-        const distancia =
-            120 + Math.random() * 350;
+        posiciones[i * 3] =
+            Math.cos(angulo) * radio;
 
-        const x =
-            Math.cos(angulo) * distancia;
+        posiciones[i * 3 + 1] =
+            (Math.random() - 0.5) * 650;
 
-        particula.style.left = "50%";
-        particula.style.top = "50%";
-
-        particula.style.setProperty(
-            "--x",
-            x + "px"
-        );
-
-        particula.style.fontSize =
-            (8 + Math.random() * 18) + "px";
-
-        particula.style.animationDuration =
-            (4 + Math.random() * 8) + "s";
-
-        particula.style.animationDelay =
-            Math.random() * 5 + "s";
-
-        document.body.appendChild(particula);
+        posiciones[i * 3 + 2] =
+            Math.sin(angulo) * radio;
     }
+
+    const geometria = new THREE.BufferGeometry();
+
+    geometria.setAttribute(
+        "position",
+        new THREE.BufferAttribute(posiciones, 3)
+    );
+
+    const material = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 2.2,
+        transparent: true,
+        opacity: 0.95
+    });
+
+    estrellas = new THREE.Points(
+        geometria,
+        material
+    );
+
+    escena.add(estrellas);
+
+
+    // ==========================================
+    // ✨ SEGUNDA CAPA
+    // ==========================================
+
+    const cantidad2 = 1200;
+
+    const posiciones2 = new Float32Array(cantidad2 * 3);
+
+    for (let i = 0; i < cantidad2; i++) {
+
+        posiciones2[i * 3] =
+            (Math.random() - 0.5) * 1500;
+
+        posiciones2[i * 3 + 1] =
+            (Math.random() - 0.5) * 900;
+
+        posiciones2[i * 3 + 2] =
+            (Math.random() - 0.5) * 1200;
+    }
+
+    const geometria2 = new THREE.BufferGeometry();
+
+    geometria2.setAttribute(
+        "position",
+        new THREE.BufferAttribute(posiciones2, 3)
+    );
+
+    const material2 = new THREE.PointsMaterial({
+        color: 0xffd6e5,
+        size: 1.5,
+        transparent: true,
+        opacity: 0.8
+    });
+
+    estrellas2 = new THREE.Points(
+        geometria2,
+        material2
+    );
+
+    escena.add(estrellas2);
+
+
+    // ==========================================
+    // 🖱️ MOVIMIENTO DEL MOUSE
+    // ==========================================
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+
+        mouseX =
+            e.clientX / window.innerWidth - 0.5;
+
+        mouseY =
+            e.clientY / window.innerHeight - 0.5;
+    });
+
+
+    // ==========================================
+    // 🌌 ANIMACIÓN
+    // ==========================================
+
+    function animarGalaxia() {
+
+        requestAnimationFrame(animarGalaxia);
+
+        if (estrellas) {
+
+            estrellas.rotation.y += 0.0007;
+            estrellas.rotation.x += 0.00015;
+
+            estrellas.rotation.y += mouseX * 0.0008;
+            estrellas.rotation.x += mouseY * 0.0004;
+        }
+
+        if (estrellas2) {
+
+            estrellas2.rotation.y += 0.00025;
+            estrellas2.rotation.x += 0.0001;
+        }
+
+        renderizador.render(
+            escena,
+            camara
+        );
+    }
+
+    animarGalaxia();
+
+
+    // ==========================================
+    // 📱 REDIMENSIONAR
+    // ==========================================
+
+    window.addEventListener("resize", () => {
+
+        camara.aspect =
+            window.innerWidth / window.innerHeight;
+
+        camara.updateProjectionMatrix();
+
+        renderizador.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+    });
 }
 
 
-// 💗 LLUVIA DE "TE AMO"
-function lluviaTeAmo() {
+// ==========================================
+// ❤️ LOGIN
+// ==========================================
+
+function iniciarSesion() {
+
+    const nombre =
+        document.getElementById("nombre");
+
+    const contraseña =
+        document.getElementById("contraseña");
+
+    const login =
+        document.getElementById("loginBox");
 
     const universo =
         document.getElementById("universo");
 
-    for (let i = 0; i < 15; i++) {
+    const nombreCorrecto = "Scarlet";
+    const contraseñaCorrecta = "1234";
 
-        const texto =
-            document.createElement("div");
 
-        texto.className = "te-amo";
+    if (
+        nombre.value.trim().toLowerCase() ===
+        nombreCorrecto.toLowerCase()
+        &&
+        contraseña.value ===
+        contraseñaCorrecta
+    ) {
 
-        texto.textContent =
-            "Te amo ❤️";
+        login.classList.add("salir");
 
-        // Posición horizontal aleatoria
-        texto.style.left =
-            Math.random() * 100 + "vw";
-
-        // Tamaño aleatorio
-        texto.style.fontSize =
-            (14 + Math.random() * 14) + "px";
-
-        // Velocidad aleatoria
-        texto.style.animationDuration =
-            (4 + Math.random() * 5) + "s";
-
-        // Retraso aleatorio
-        texto.style.animationDelay =
-            Math.random() * 2 + "s";
-
-        universo.appendChild(texto);
-
-        // Eliminar después de caer
         setTimeout(() => {
-            texto.remove();
-        }, 10000);
+
+            login.style.display = "none";
+
+            universo.style.display = "flex";
+
+            iniciarLluvia();
+
+        }, 700);
+
+    } else {
+
+        alert(
+            "Nombre o contraseña incorrectos ❤️"
+        );
     }
 }
 
 
-// ✨ ESTRELLAS AL PASAR EL DEDO
-document.addEventListener("touchmove", (e) => {
+// ==========================================
+// ☄️ LLUVIA DE "TE AMO" 💜
+// ==========================================
 
-    const dedo = e.touches[0];
+function crearTeAmo() {
 
-    const estrella =
+    const texto =
         document.createElement("div");
 
-    estrella.className =
-        "estrella-dedo";
+    texto.className = "te-amo";
 
-    estrella.textContent = "✦";
+    texto.innerHTML = "Te amo 💜";
 
-    estrella.style.left =
-        dedo.clientX + "px";
 
-    estrella.style.top =
-        dedo.clientY + "px";
+    // ☄️ POSICIÓN ALEATORIA CERCA DE LA ESQUINA
+    texto.style.right =
+        (-80 + Math.random() * 180) + "px";
 
-    document.body.appendChild(estrella);
 
+    // ✨ TAMAÑO ALEATORIO
+    texto.style.fontSize =
+        (17 + Math.random() * 13) + "px";
+
+
+    // ☄️ VELOCIDAD ALEATORIA
+    const velocidad =
+        1.8 + Math.random() * 1.5;
+
+    texto.style.animationDuration =
+        velocidad + "s";
+
+
+    document.body.appendChild(texto);
+
+
+    // 🧹 BORRAR DESPUÉS
     setTimeout(() => {
-        estrella.remove();
-    }, 1000);
 
-});
+        texto.remove();
+
+    }, (velocidad + 1) * 1000);
+}
+
+
+// ==========================================
+// ☄️ LLUVIA MÁS INTENSA
+// ==========================================
+
+function iniciarLluvia() {
+
+    // Crear varios inmediatamente
+    for (let i = 0; i < 5; i++) {
+
+        setTimeout(() => {
+            crearTeAmo();
+        }, i * 180);
+    }
+
+
+    // Crear nuevos constantemente
+    setInterval(() => {
+
+        // ☄️ 2 o 3 cometas cada vez
+        const cantidad =
+            Math.random() > 0.5 ? 3 : 2;
+
+        for (let i = 0; i < cantidad; i++) {
+
+            setTimeout(() => {
+                crearTeAmo();
+            }, i * 150);
+        }
+
+    }, 500);
+}

@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <title>Mi Universo ❤️</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- 🌌 Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
 
+    <!-- 🌌 Galaxia -->
+    <div id="galaxia"></div>
+
+    <!-- ❤️ Contenido -->
     <div class="contenedor">
         <h1>Mi universo ❤️</h1>
         <p>te amo mi niña preciosa</p>
@@ -18,42 +25,8 @@
         </button>
     </div>
 
+    <!-- 🌌 Código de la galaxia -->
     <script src="script.js"></script>
-
-    <script>
-        const contenedor = document.querySelector(".contenedor");
-
-        function mover3D(x, y) {
-            const rotacionX = (window.innerWidth / 2 - x) / 25;
-            const rotacionY = (window.innerHeight / 2 - y) / 25;
-
-            contenedor.style.transform =
-                `perspective(900px) rotateY(${rotacionX}deg) rotateX(${rotacionY}deg)`;
-        }
-
-        // Movimiento con mouse
-        document.addEventListener("mousemove", (e) => {
-            mover3D(e.clientX, e.clientY);
-        });
-
-        // Movimiento con dedo
-        document.addEventListener("touchmove", (e) => {
-            const dedo = e.touches[0];
-            mover3D(dedo.clientX, dedo.clientY);
-        }, { passive: true });
-
-        // Volver al centro al quitar el mouse
-        document.addEventListener("mouseleave", () => {
-            contenedor.style.transform =
-                "perspective(900px) rotateY(0deg) rotateX(0deg)";
-        });
-
-        // Volver al centro al levantar el dedo
-        document.addEventListener("touchend", () => {
-            contenedor.style.transform =
-                "perspective(900px) rotateY(0deg) rotateX(0deg)";
-        });
-    </script>
 
 </body>
 </html>

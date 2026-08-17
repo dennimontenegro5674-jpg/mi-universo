@@ -3,122 +3,173 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mi Universo 💗</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Para Scarlet ❤️</title>
+
     <link rel="stylesheet" href="login.css">
+
+    <!-- 🌌 Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
 
-    <!-- LOGIN -->
+    <!-- 🌌 FONDO DE ESTRELLAS -->
+    <div id="galaxia"></div>
+
+
+    <!-- ❤️ LOGIN -->
     <div class="login-box" id="loginBox">
 
-        <h2>Mi universo 💗</h2>
-        <p>Bienvenido</p>
+        <h2>Mi universo ❤️</h2>
 
-        <input type="text" id="nombre" placeholder="Tu nombre">
-        <input type="password" id="contraseña" placeholder="Tu contraseña">
+        <p>Un lugar creado especialmente para ti ✨</p>
 
-        <button class="login-btn" onclick="iniciarSesion()">
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Tu nombre"
+            autocomplete="off"
+        >
+
+        <input
+            type="password"
+            id="contraseña"
+            placeholder="Tu contraseña"
+        >
+
+        <button
+            class="login-btn"
+            onclick="iniciarSesion()"
+        >
             Entrar ✨
         </button>
 
     </div>
 
 
-    <!-- PANTALLA DEL UNIVERSO -->
+    <!-- ❤️ UNIVERSO FINAL -->
     <div class="universo" id="universo">
 
-        <!-- CENTRO DE LA GALAXIA -->
-        <div class="galaxia-centro">
-            <div class="anillo"></div>
-            <div class="nucleo"></div>
-        </div>
+        <!-- ❤️ CORAZÓN 3D + ESTRELLAS -->
+        <div class="galaxia-centro"></div>
 
+
+        <!-- ✨ DECORACIÓN -->
         <div class="estrellas">
-            ✦　✧　✦　✧　✦
+            ✦ ✧ ✦
         </div>
 
+
+        <!-- ❤️ TÍTULO -->
         <h1>
-            Bienvenido a mi universo 💗
+            Mi lugar favorito eres tú ❤️
         </h1>
 
-        <p id="mensaje"></p>
 
+        <!-- 💗 MENSAJE -->
+        <p id="mensaje">
+            Scarlet, este pequeño universo es solo para ti ❤️
+        </p>
+
+
+        <!-- 💕 FRASE -->
         <div class="corazones">
-            💗 💕 💖 💘 💗
+            Te amo mucho, mi niña ❤️
         </div>
 
     </div>
 
 
+    <!-- 🌌 SCRIPT PRINCIPAL -->
     <script src="script.js"></script>
 
 
+    <!-- ✨ EFECTO 3D DEL LOGIN -->
     <script>
 
         const caja = document.getElementById("loginBox");
 
-
         function moverLogin(x, y) {
 
-            const rotacionX =
-                (window.innerWidth / 2 - x) / 25;
+            if (!caja) return;
+
+            const rect = caja.getBoundingClientRect();
+
+            const centroX =
+                rect.left + rect.width / 2;
+
+            const centroY =
+                rect.top + rect.height / 2;
 
             const rotacionY =
-                (window.innerHeight / 2 - y) / 25;
+                (x - centroX) / 35;
 
+            const rotacionX =
+                (centroY - y) / 35;
 
             caja.style.transform =
                 `perspective(800px)
-                 rotateY(${rotacionX}deg)
-                 rotateX(${rotacionY}deg)`;
+                 rotateY(${rotacionY}deg)
+                 rotateX(${rotacionX}deg)`;
         }
 
 
-        // MOVIMIENTO CON MOUSE
-
+        /* 🖱️ MOUSE */
         document.addEventListener("mousemove", (e) => {
 
-            moverLogin(
-                e.clientX,
-                e.clientY
-            );
+            if (
+                caja &&
+                caja.style.display !== "none" &&
+                !caja.classList.contains("salir")
+            ) {
+
+                moverLogin(
+                    e.clientX,
+                    e.clientY
+                );
+            }
 
         });
 
 
-        // MOVIMIENTO CON DEDO
+        /* 📱 CELULAR */
+        document.addEventListener(
+            "touchmove",
+            (e) => {
 
-        document.addEventListener("touchmove", (e) => {
+                if (
+                    !caja ||
+                    caja.style.display === "none" ||
+                    caja.classList.contains("salir")
+                ) return;
 
-            const dedo = e.touches[0];
+                const dedo = e.touches[0];
 
-            moverLogin(
-                dedo.clientX,
-                dedo.clientY
-            );
+                moverLogin(
+                    dedo.clientX,
+                    dedo.clientY
+                );
 
-        }, { passive: true });
+            },
+            { passive: true }
+        );
 
 
-        // VOLVER AL CENTRO
-
+        /* ❤️ VOLVER AL CENTRO */
         document.addEventListener("mouseleave", () => {
 
-            caja.style.transform =
-                "perspective(800px) rotateY(0deg) rotateX(0deg)";
+            if (caja) {
 
-        });
-
-
-        document.addEventListener("touchend", () => {
-
-            caja.style.transform =
-                "perspective(800px) rotateY(0deg) rotateX(0deg)";
+                caja.style.transform =
+                    "perspective(800px) rotateY(0deg) rotateX(0deg)";
+            }
 
         });
 
     </script>
 
 </body>
+
 </html>
