@@ -11,7 +11,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* 🌌 GALAXIA */
+
+/* ==========================================
+   🌌 GALAXIA
+========================================== */
+
 #galaxia {
     position: fixed;
     inset: 0;
@@ -23,42 +27,191 @@ body {
 
     overflow: hidden;
 
-    background: #000;
+    background:
+        radial-gradient(
+            ellipse at
+            calc(50% + var(--mov-x, 0px))
+            calc(50% + var(--mov-y, 0px)),
+            rgba(145, 0, 255, 0.45),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            ellipse at
+            calc(25% + var(--mov-x, 0px) * 0.5)
+            calc(40% + var(--mov-y, 0px) * 0.5),
+            rgba(255, 0, 150, 0.25),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            ellipse at
+            calc(75% + var(--mov-x, 0px) * 0.5)
+            calc(60% + var(--mov-y, 0px) * 0.5),
+            rgba(60, 0, 255, 0.25),
+            transparent 35%
+        ),
+
+        #000;
+
+    transition:
+        background 0.1s linear;
 }
 
+
+/* ==========================================
+   🌌 NEBULOSA QUE SIGUE EL MOUSE
+========================================== */
+
+#galaxia::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 1000px;
+    height: 1000px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            calc(-50% + var(--mov-x, 0px)),
+            calc(-50% + var(--mov-y, 0px))
+        );
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+
+            rgba(150, 0, 255, 0.35),
+
+            rgba(220, 0, 180, 0.22),
+
+            rgba(255, 0, 120, 0.12),
+
+            transparent 68%
+        );
+
+    filter: blur(65px);
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    animation:
+        nebulosa 10s ease-in-out infinite alternate;
+}
+
+
+/* ==========================================
+   🌌 SEGUNDA NEBULOSA
+========================================== */
+
+#galaxia::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 850px;
+    height: 260px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            calc(-50% + var(--mov-x, 0px) * 0.6),
+            calc(-50% + var(--mov-y, 0px) * 0.6)
+        )
+        rotate(-20deg);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+
+            rgba(255, 0, 180, 0.30),
+
+            rgba(100, 0, 255, 0.25),
+
+            transparent 70%
+        );
+
+    filter: blur(45px);
+
+    pointer-events: none;
+
+    z-index: 3;
+
+    animation:
+        galaxiaMovimiento 8s ease-in-out infinite alternate;
+}
+
+
+/* ==========================================
+   ✨ ESTRELLAS 3D
+========================================== */
+
 #galaxia canvas {
+
+    position: absolute;
+
+    inset: 0;
+
     display: block;
 
     width: 100% !important;
     height: 100% !important;
+
+    z-index: 4;
 }
 
 
-/* ❤️ FONDO */
+/* ==========================================
+   ❤️ FONDO
+========================================== */
+
 body {
+
     position: relative;
 
     width: 100vw;
     height: 100vh;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
+    background: #000;
 }
 
 
-/* ❤️ TARJETA PRINCIPAL */
+/* ==========================================
+   ❤️ TARJETA PRINCIPAL
+========================================== */
+
 .contenedor {
+
     position: fixed;
 
     left: 50%;
     top: 50%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     z-index: 10;
 
     width: min(90vw, 600px);
+
     max-width: 600px;
 
     padding: 50px;
@@ -69,51 +222,83 @@ body {
 
     border-radius: 30px;
 
-    background: rgba(255, 255, 255, 0.08);
+    background:
+        rgba(255, 255, 255, 0.08);
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
 
     box-shadow:
-        0 30px 70px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(255, 105, 180, 0.15);
 
-    backdrop-filter: blur(15px);
+        0 30px 70px
+        rgba(0, 0, 0, 0.5),
+
+        0 0 40px
+        rgba(255, 105, 180, 0.15);
+
+    backdrop-filter:
+        blur(15px);
 }
 
 
-/* ❤️ TÍTULO */
-.contenedor h1 {
-    font-size: clamp(35px, 7vw, 50px);
+/* ==========================================
+   ❤️ TÍTULO
+========================================== */
 
-    margin: 0 0 15px;
+.contenedor h1 {
+
+    font-size:
+        clamp(35px, 7vw, 50px);
+
+    margin:
+        0 0 15px;
 
     text-shadow:
+
         0 0 20px #ff69b4,
-        0 0 40px #b84dff;
+
+        0 0 40px #b84dff,
+
+        0 0 70px #8a2be2;
 }
 
 
-/* 💗 TEXTO */
+/* ==========================================
+   💗 TEXTO
+========================================== */
+
 .contenedor p {
-    font-size: clamp(16px, 4vw, 20px);
+
+    font-size:
+        clamp(16px, 4vw, 20px);
 
     margin-bottom: 30px;
 }
 
 
-/* 💕 BOTÓN */
+/* ==========================================
+   💕 BOTÓN
+========================================== */
+
 .contenedor button {
-    padding: 15px 35px;
+
+    padding:
+        15px 35px;
 
     border: none;
 
     border-radius: 15px;
 
     background:
+
         linear-gradient(
             45deg,
-            #ff4f9a,
-            #ff8acb
+
+            #7b00ff,
+
+            #b000ff,
+
+            #e100ff
         );
 
     color: white;
@@ -124,30 +309,123 @@ body {
 
     cursor: pointer;
 
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
 
     box-shadow:
-        0 0 20px rgba(255, 92, 168, 0.5);
+
+        0 0 20px
+        rgba(176, 0, 255, 0.6);
 }
+
 
 .contenedor button:hover {
-    transform: scale(1.08);
+
+    transform:
+        scale(1.08);
 
     box-shadow:
-        0 0 35px #ff5ca8;
+
+        0 0 25px #b000ff,
+
+        0 0 50px #8a2be2;
 }
 
 
-/* 📱 CELULAR */
+/* ==========================================
+   🌌 ANIMACIÓN NEBULOSA
+========================================== */
+
+@keyframes nebulosa {
+
+    0% {
+
+        margin-left: -20px;
+
+        opacity: 0.75;
+
+        scale: 0.9;
+    }
+
+    50% {
+
+        opacity: 1;
+    }
+
+    100% {
+
+        margin-left: 20px;
+
+        opacity: 0.8;
+
+        scale: 1.15;
+    }
+}
+
+
+/* ==========================================
+   🌌 MOVIMIENTO GALAXIA
+========================================== */
+
+@keyframes galaxiaMovimiento {
+
+    0% {
+
+        margin-top: -15px;
+
+        opacity: 0.7;
+
+        scale: 0.9;
+    }
+
+    100% {
+
+        margin-top: 15px;
+
+        opacity: 1;
+
+        scale: 1.15;
+    }
+}
+
+
+/* ==========================================
+   📱 CELULAR
+========================================== */
+
 @media (max-width: 600px) {
 
     .contenedor {
+
         width: 90vw;
 
-        padding: 35px 20px;
+        padding:
+            35px 20px;
     }
 
     .contenedor h1 {
+
         font-size: 35px;
+    }
+
+
+    #galaxia::before {
+
+        width: 750px;
+        height: 750px;
+
+        filter:
+            blur(50px);
+    }
+
+
+    #galaxia::after {
+
+        width: 650px;
+        height: 200px;
+
+        filter:
+            blur(35px);
     }
 }

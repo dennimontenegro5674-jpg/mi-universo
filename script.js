@@ -320,4 +320,155 @@ function iniciarLluvia() {
         }
 
     }, 500);
+}// ==========================================
+// 🌌 NEBULOSA INTERACTIVA
+// 🖱️ MOUSE + 📱 TÁCTIL
+// ==========================================
+
+const nebulosaGalaxia = document.getElementById("galaxia");
+
+if (nebulosaGalaxia) {
+
+    let movimientoX = 0;
+    let movimientoY = 0;
+
+    let objetivoX = 0;
+    let objetivoY = 0;
+
+
+    // ==========================================
+    // 🖱️ MOUSE
+    // ==========================================
+
+    document.addEventListener("mousemove", (e) => {
+
+        objetivoX =
+            (e.clientX / window.innerWidth - 0.5) * 80;
+
+        objetivoY =
+            (e.clientY / window.innerHeight - 0.5) * 80;
+
+    });
+
+
+    // ==========================================
+    // 📱 TÁCTIL
+    // ==========================================
+
+    document.addEventListener("touchmove", (e) => {
+
+        if (e.touches.length > 0) {
+
+            const dedo = e.touches[0];
+
+            objetivoX =
+                (dedo.clientX / window.innerWidth - 0.5) * 80;
+
+            objetivoY =
+                (dedo.clientY / window.innerHeight - 0.5) * 80;
+        }
+
+    }, { passive: true });
+
+
+    // ==========================================
+    // 🌌 MOVIMIENTO SUAVE
+    // ==========================================
+
+    function moverNebulosa() {
+
+        movimientoX +=
+            (objetivoX - movimientoX) * 0.04;
+
+        movimientoY +=
+            (objetivoY - movimientoY) * 0.04;
+
+
+        nebulosaGalaxia.style.setProperty(
+            "--mov-x",
+            movimientoX + "px"
+        );
+
+        nebulosaGalaxia.style.setProperty(
+            "--mov-y",
+            movimientoY + "px"
+        );
+
+
+        requestAnimationFrame(
+            moverNebulosa
+        );
+    }
+
+    moverNebulosa();
+}// ==========================================
+// 🌌 NEBULOSA INTERACTIVA
+// 🖱️ MOUSE + 📱 TÁCTIL
+// ==========================================
+
+const galaxiaInteractiva = document.getElementById("galaxia");
+
+let nebulosaX = 0;
+let nebulosaY = 0;
+
+let objetivoX = 0;
+let objetivoY = 0;
+
+
+// 🖱️ MOUSE
+window.addEventListener("mousemove", function(e) {
+
+    objetivoX =
+        (e.clientX / window.innerWidth - 0.5) * 120;
+
+    objetivoY =
+        (e.clientY / window.innerHeight - 0.5) * 120;
+
+});
+
+
+// 📱 TÁCTIL
+window.addEventListener("touchmove", function(e) {
+
+    if (e.touches.length > 0) {
+
+        const dedo = e.touches[0];
+
+        objetivoX =
+            (dedo.clientX / window.innerWidth - 0.5) * 120;
+
+        objetivoY =
+            (dedo.clientY / window.innerHeight - 0.5) * 120;
+    }
+
+}, { passive: true });
+
+
+// 🌌 MOVIMIENTO SUAVE
+function animarNebulosa() {
+
+    nebulosaX +=
+        (objetivoX - nebulosaX) * 0.05;
+
+    nebulosaY +=
+        (objetivoY - nebulosaY) * 0.05;
+
+
+    if (galaxiaInteractiva) {
+
+        galaxiaInteractiva.style.setProperty(
+            "--mov-x",
+            nebulosaX + "px"
+        );
+
+        galaxiaInteractiva.style.setProperty(
+            "--mov-y",
+            nebulosaY + "px"
+        );
+    }
+
+
+    requestAnimationFrame(animarNebulosa);
 }
+
+animarNebulosa();
